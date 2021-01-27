@@ -23,3 +23,7 @@ postgresql/data/**/*
 #
 .vscode
 
+#
+# Postgres
+#
+.pgpass
