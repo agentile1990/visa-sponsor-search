@@ -12,3 +12,14 @@ localData
 # Python
 #
 *.pyc
+
+#
+# Postgres Data
+#
+postgresql/data/**/*
+
+#
+# VS Code Settings
+#
+.vscode
+
