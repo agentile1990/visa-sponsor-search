@@ -4,9 +4,10 @@
 
 DROP TABLE IF EXISTS "countries";
 CREATE TABLE "countries" (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
 
     name TEXT UNIQUE NOT NULL,
+    code3 TEXT UNIQUE NOT NULL,
 
     createdAt TIMESTAMP DEFAULT NOW(),
     updatedAt TIMESTAMP DEFAULT NOW()
