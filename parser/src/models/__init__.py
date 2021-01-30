@@ -6,3 +6,4 @@ from .model import Model
 
 from .country import *
 from .city import *
+from .company import *
