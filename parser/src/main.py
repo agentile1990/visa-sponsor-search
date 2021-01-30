@@ -34,6 +34,7 @@ def main():
 
     # Initialize models
     Country = models.CountryModel(conn)
+    City = models.CityModel(conn)
 
     for country in Country.list():
         getattr(country_parser, country.code3)()

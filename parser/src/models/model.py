@@ -8,5 +8,11 @@ class Model():
         self.conn = conn
         self.cur = conn.cursor()
 
+    def upsert(self, data):
+        return None
+
     def list(self):
         return []
+
+    def find(self, id):
+        return None
