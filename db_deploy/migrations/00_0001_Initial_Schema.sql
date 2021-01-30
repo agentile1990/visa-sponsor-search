@@ -50,8 +50,9 @@ CREATE TABLE "sponsorships" (
 
     "type" TEXT,
     "route" TEXT,
+
+    "hash" TEXT UNIQUE NOT NULL
     
     "createdAt" TIMESTAMP DEFAULT NOW(),
     "updatedAT" TIMESTAMP DEFAULT NOW()
 );
-CREATE UNIQUE INDEX ON "sponsorships" ("companyId", "type");
