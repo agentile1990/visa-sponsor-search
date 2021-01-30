@@ -36,6 +36,7 @@ def main():
     Country = models.CountryModel(conn)
     City = models.CityModel(conn)
     Company = models.CompanyModel(conn)
+    Sponsorship = models.SponsorshipModel(conn)
 
     for country in Country.list():
         getattr(country_parser, country.code3)()
