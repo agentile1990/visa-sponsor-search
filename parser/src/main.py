@@ -33,13 +33,11 @@ def main():
     conn = connect()
 
     # Initialize models
-    Country = models.CountryModel(conn)
-    City = models.CityModel(conn)
-    Company = models.CompanyModel(conn)
-    Sponsorship = models.SponsorshipModel(conn)
+    models.initialize(conn)
+    Country = models.Country
 
     for country in Country.list():
-        getattr(country_parser, country.code3)()
+        getattr(country_parser, country.code3)(country)
 
 
 if __name__ == "__main__":
