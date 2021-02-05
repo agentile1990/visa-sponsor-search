@@ -25,7 +25,7 @@
   "postCreateCommand": "pip install autopep8",
 
   // Uncomment when using a ptrace-based debugger like C++, Go, and Rust
-  "runArgs": [ "--add-host=postgresql:192.168.65.2" ],
+  "runArgs": [ "--add-host=postgresql:192.168.65.2"],
 
   // Uncomment to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
   "mounts": [
