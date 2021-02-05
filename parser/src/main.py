@@ -6,6 +6,7 @@ parses this data for insertion into the database.
 """
 
 import psycopg2
+import time
 import country_parser
 import models
 
@@ -40,7 +41,14 @@ def main():
     Country = models.Country
 
     for country in Country.list():
+        print("[parser] running {}".format(country.code3))
+        start_time = time.perf_counter()
+
         getattr(country_parser, country.code3)(country)
+
+        end_time = time.perf_counter()
+        print("[parser] {} execution time: {:.2f}s".format(
+            country.code3, end_time - start_time))
 
 
 if __name__ == "__main__":
