@@ -1,6 +1,7 @@
 """
 A model describing company records in the database
 """
+from titlecase import titlecase
 
 from .model import Model
 
@@ -19,23 +20,22 @@ class CompanyModel(Model):
 
     def upsert(self, data):
         self.cur.execute("""
-            INSERT INTO "companies" ("name", "countryId", "cityId") VALUES ('{}', '{}', '{}')
+            INSERT INTO "companies" ("name", "countryId", "cityId") VALUES (%s, %s, %s)
             ON CONFLICT ("name", "countryId", "cityId") DO UPDATE
                 SET "id" = "companies"."id"
             RETURNING "id"
-        """.format(data["name"], data["countryId"], data["cityId"]))
-        self.conn.commit()
+        """, (titlecase(data["name"]), data["countryId"], data["cityId"],)
+        )
 
         return self.find(self.cur.fetchone()[0])
 
     def find(self, id):
         self.cur.execute("""
-            SELECT * FROM "companies" WHERE "id" = '{}'
-        """.format(id))
+            SELECT * FROM "companies" WHERE "id" = %s
+        """, (id,))
 
         company = self.cur.fetchone()
-
-        if not company: 
+        if not company:
             return None
 
         return Company({

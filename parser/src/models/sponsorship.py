@@ -3,7 +3,9 @@ A model describing sponsorship records in the database
 """
 import hashlib
 import json
+from titlecase import titlecase
 from .model import Model
+
 
 def dict_hash(dict):
     """ 
@@ -16,6 +18,7 @@ def dict_hash(dict):
     dhash.update(encoded)
 
     return dhash.hexdigest()
+
 
 class Sponsorship():
     def __init__(self, dict):
@@ -39,19 +42,18 @@ class SponsorshipModel(Model):
                 "companyId",
                 "type", "route",
                 "hash"
-            ) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')
+            ) VALUES (%s, %s, %s, %s, %s, %s)
             ON CONFLICT ("hash") DO UPDATE
                 SET "id" = "sponsorships"."id"
             RETURNING "id"
-        """.format(
+        """, (
             data["countryId"],
             data["cityId"],
             data["companyId"],
-            data["type"],
-            data["route"],
-            dict_hash(data)
+            titlecase(data["type"]),
+            titlecase(data["route"]),
+            dict_hash(data),
         ))
-        self.conn.commit()
 
         return self.find(self.cur.fetchone()[0])
 

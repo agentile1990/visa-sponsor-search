@@ -12,9 +12,13 @@ import models
 
 def connect():
     """Returns a connection to the database"""
-    return psycopg2.connect(
+    conn = psycopg2.connect(
         "host=postgresql dbname=visa_sponsorship_search user=postgres password=example"
     )
+
+    conn.autocommit = True
+
+    return conn
 
 
 def get_countries(conn):
@@ -23,7 +27,6 @@ def get_countries(conn):
 
     cur.execute("SELECT * FROM countries")
     countries = cur.fetchall()
-    cur.close()
 
     return countries
 
