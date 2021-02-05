@@ -1,0 +1,29 @@
+#
+# Local Data
+#
+localData
+
+#
+# .DS_Store
+#
+.DS_Store
+
+#
+# Python
+#
+*.pyc
+
+#
+# Postgres Data
+#
+postgresql/data/**/*
+
+#
+# VS Code Settings
+#
+.vscode
+
+#
+# Postgres
+#
+.pgpass
