@@ -1,0 +1,33 @@
+{
+    "name": "visa-sponsor-search-server",
+    "version": "0.1.0",
+    "description": "API server for visa-sponsor-search",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/agentile1990/visa-sponsor-search.git"
+    },
+    "author": "Andrew Gentile <agentile1990@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/agentile1990/visa-sponsor-search/issues"
+    },
+    "homepage": "https://github.com/agentile1990/visa-sponsor-search#readme",
+    "devDependencies": {
+        "eslint": "^7.19.0",
+        "eslint-config-prettier": "^7.2.0",
+        "husky": "^4.3.8",
+        "lint-staged": "^10.5.4"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": "eslint --cache --fix"
+    }
+}
