@@ -54,5 +54,5 @@ CREATE TABLE "sponsorships" (
     "hash" TEXT UNIQUE NOT NULL,
     
     "createdAt" TIMESTAMP DEFAULT NOW(),
-    "updatedAT" TIMESTAMP DEFAULT NOW()
+    "updatedAt" TIMESTAMP DEFAULT NOW()
 );
