@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/countries', require('./apps/countries/countries.app'));
+app.use('/cities', require('./apps/cities/cities.app'));
 
 app.use('/*', function (req, res) {
     return res.status(404).send({ message: 'Not Found' });
