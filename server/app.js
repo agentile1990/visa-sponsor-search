@@ -12,6 +12,7 @@ app.use(cookieParser());
 
 app.use('/countries', require('./apps/countries/countries.app'));
 app.use('/cities', require('./apps/cities/cities.app'));
+app.use('/companies', require('./apps/companies/companies.app'));
 
 app.use('/*', function (req, res) {
     return res.status(404).send({ message: 'Not Found' });
