@@ -7,19 +7,6 @@ from titlecase import titlecase
 from .model import Model
 
 
-def dict_hash(dict):
-    """ 
-    MD5 hash of a dictionary. 
-    Source: https://www.doc.ic.ac.uk/~nuric/coding/how-to-hash-a-dictionary-in-python.html
-    """
-    dhash = hashlib.md5()
-
-    encoded = json.dumps(dict, sort_keys=True).encode()
-    dhash.update(encoded)
-
-    return dhash.hexdigest()
-
-
 class Sponsorship():
     def __init__(self, dict):
         self.id = dict["id"]
@@ -40,9 +27,8 @@ class SponsorshipModel(Model):
                 "countryId", 
                 "cityId",
                 "companyId",
-                "type", "route",
-                "hash"
-            ) VALUES (%s, %s, %s, %s, %s, %s)
+                "type", "route"
+            ) VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT ("hash") DO UPDATE
                 SET "id" = "sponsorships"."id"
             RETURNING "id"
@@ -51,8 +37,7 @@ class SponsorshipModel(Model):
             data["cityId"],
             data["companyId"],
             titlecase(data["type"]),
-            titlecase(data["route"]),
-            dict_hash(data),
+            titlecase(data["route"])
         ))
 
         return self.find(self.cur.fetchone()[0])
