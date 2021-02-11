@@ -10,6 +10,7 @@ WORKDIR /db_deploy
 COPY ./db_deploy.py ./db_deploy.py
 
 COPY ./migrations/*.sql ./migrations/
+COPY ./triggers/*.sql ./triggers/
 
 COPY ./.pgpass ./.pgpass
 RUN chmod 0600 ./.pgpass

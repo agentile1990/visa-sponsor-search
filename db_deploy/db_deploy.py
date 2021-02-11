@@ -48,12 +48,18 @@ def update_version(conn, migration):
     cur.close()
 
 
-def parse_file(f):
+def parse_migration_file(f):
     match = re.search('(?!\d{2}_)(\d{4})(?=_\w)', f)
 
     if (match):
         return {"name": match.string, "version": int(match.group())}
 
+
+def parse_trigger_file(f):
+    match = re.search('^trg_', f)
+
+    if (match):
+        return {"name": match.string}
 
 def execute_migration(credentials, migration):
     print("[db_deploy] Running migration", migration["name"])
@@ -62,6 +68,16 @@ def execute_migration(credentials, migration):
         credentials["dbname"],
         credentials["user"],
         migration["name"]
+    )
+    os.system(cmd)
+
+def execute_trigger(credentials, trigger):
+    print("[db_deploy] Running trigger", trigger["name"])
+    cmd = "psql -h {} -d {} -U {} -f ./triggers/{}".format(
+        credentials["host"],
+        credentials["dbname"],
+        credentials["user"],
+        trigger["name"]
     )
     os.system(cmd)
 
@@ -75,9 +91,10 @@ def main():
     current_version = get_version(conn)
     print("[db_deploy] current version", current_version)
 
+    # Run Migrations
     files = os.listdir("./migrations")
     for f in files:
-        migration = parse_file(f)
+        migration = parse_migration_file(f)
 
         if (not migration):
             continue
@@ -87,6 +104,17 @@ def main():
 
         execute_migration(credentials, migration)
         update_version(conn, migration)
+
+    # Update Triggers
+    files = os.listdir("./triggers")
+    print(files)
+    for f in files:
+        trigger = parse_trigger_file(f)
+
+        if (not trigger):
+            continue
+
+        execute_trigger(credentials, trigger)
 
     current_version = get_version(conn)
     conn.close()
