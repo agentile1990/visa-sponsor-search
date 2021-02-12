@@ -1,15 +1,16 @@
  version: "3.7"
 
  services:
-    postgresql:
+    postgres:
       image: postgres:latest
       #restart: always
       volumes:
-        - ./postgresql/data:/var/lib/postgresql/data
-        - ./postgresql/initdb.d:/docker-entrypoint-initdb.d
+        - ./postgres/data:/var/lib/postgres/data
+        - ./postgres/initdb.d:/docker-entrypoint-initdb.d
       ports:
         - 5432:5432
       environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: example
-        POSTGRES_DB: visa_sponsorship_search
+        POSTGRES_DB: visa_sponsor_search
+        PGDATA: /var/lib/postgres/data

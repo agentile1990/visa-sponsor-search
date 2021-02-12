@@ -16,7 +16,7 @@ localData
 #
 # Postgres Data
 #
-postgresql/data/**/*
+postgres/data/**/*
 
 #
 # VS Code Settings

@@ -31,6 +31,6 @@
     "remoteUser": "node",
 
     "containerEnv": {
-        "DEBUG": "visa-sponsorship-search-server:*"
+        "DEBUG": "visa-sponsor-search-server:*"
     }
 }

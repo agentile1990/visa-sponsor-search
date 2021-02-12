@@ -14,7 +14,7 @@ import models
 def connect():
     """Returns a connection to the database"""
     conn = psycopg2.connect(
-        "host=postgresql dbname=visa_sponsorship_search user=postgres password=example"
+        "host=postgres dbname=visa_sponsor_search user=postgres password=example"
     )
 
     conn.autocommit = True

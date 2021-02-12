@@ -1,1 +1,1 @@
-postgresql:5432:visa_sponsorship_search:postgres:example
+postgres:5432:visa_sponsor_search:postgres:example
