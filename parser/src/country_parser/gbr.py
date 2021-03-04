@@ -8,11 +8,6 @@ from pathlib import Path
 
 from .country_parser import CountryParser
 
-import models
-City = None
-Company = None
-Sponsorship = None
-
 
 class GBR(CountryParser):
     def __init__(self, country):
@@ -20,21 +15,12 @@ class GBR(CountryParser):
 
         self.country = country
 
-        global City
-        City = models.City
-
-        global Company
-        Company = models.Company
-
-        global Sponsorship
-        Sponsorship = models.Sponsorship
-
         self.parse()
 
     def parse(self):
         # TODO: Need to fetch this from the Home Office
         path = os.path.abspath(os.path.join(
-            os.getcwd(), "./localData/2021-01-29_Tier_2_5_Register_of_Sponsors.pdf"))
+            os.getcwd(), "./localData/test.pdf"))
         print("[GBR] parsing from source:", path)
 
         # Read first page (adjusted bounds)
@@ -42,14 +28,15 @@ class GBR(CountryParser):
             path,
             pages="1",
             flavor="stream",
-            table_areas=["29, 400, 805, 40"]
+            table_regions=["29, 390, 805, 40"]
         )
 
         # Read all pages
         tables = camelot.read_pdf(
             path,
             pages="all",
-            flavor="stream"
+            flavor="stream",
+            table_regions=["40, 500, 1140, 45"]
         )
 
         # Replace first page
@@ -61,26 +48,21 @@ class GBR(CountryParser):
             index = 0
             for row in table.df.itertuples():
                 try:
-                    # Drop header row
-                    if index == 0:
-                        index += 1
-                        continue
-
                     if row._1:
                         # Company Row
-                        city = City.upsert({
+                        city = self.city_model.upsert({
                             "name": row._2,
                             "countryId": self.country.id
                         })
 
-                        company = Company.upsert({
+                        company = self.company_model.upsert({
                             "name": row._1,
                             "countryId": self.country.id,
                             "cityId": city.id
                         })
                     else:
                         # Sponsorship Row
-                        Sponsorship.upsert({
+                        self.upsertSponsorship({
                             "type": row[len(row) - 2],
                             "route": row[len(row) - 1],
                             "companyId": company.id,
@@ -91,3 +73,9 @@ class GBR(CountryParser):
                 except Exception as e:
                     print("[GBR] Parse Exception:", e)
                     print("[GBR] row:", row)
+
+    def upsertSponsorship(self, data):
+        if not data["type"] or not data["route"]:
+            raise Exception('GBR sponsorship requires type and route')
+
+        self.sponsorship_model.upsert(data)
