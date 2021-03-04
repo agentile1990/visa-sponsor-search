@@ -42,14 +42,15 @@ class GBR(CountryParser):
             path,
             pages="1",
             flavor="stream",
-            table_areas=["29, 400, 805, 40"]
+            table_regions=["29, 390, 805, 40"]
         )
 
         # Read all pages
         tables = camelot.read_pdf(
             path,
             pages="all",
-            flavor="stream"
+            flavor="stream",
+            table_regions=["40, 500, 1140, 45"]
         )
 
         # Replace first page
